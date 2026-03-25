@@ -4,14 +4,13 @@ import ora from "ora";
 import pc from "picocolors";
 import { saveConfig, configExists, type BotConfig } from "../storage/configStore.js";
 
-const banner = `
-██████╗  ██████╗ ████████╗    ██╗    ██╗██╗████████╗██╗  ██╗    ██╗  ██╗ █████╗ ██╗  ██╗██╗
-██╔══██╗██╔═══██╗╚══██╔══╝    ██║    ██║██║╚══██╔══╝██║  ██║    ██║  ██║██╔══██╗██║ ██╔╝██║
-██████╔╝██║   ██║   ██║       ██║ █╗ ██║██║   ██║   ███████║    ███████║███████║█████╔╝ ██║
-██╔══██╗██║   ██║   ██║       ██║███╗██║██║   ██║   ██╔══██║    ██╔══██║██╔══██║██╔═██╗ ██║
-██████╔╝╚██████╔╝   ██║       ╚███╔███╔╝██║   ██║   ██║  ██║    ██║  ██║██║  ██║██║  ██╗██║
-╚═════╝  ╚═════╝    ╚═╝        ╚══╝╚══╝ ╚═╝   ╚═╝   ╚═╝  ╚═╝    ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═╝╚═╝
-`;
+const banner = ` ██████╗██╗  ██╗ █████╗ ████████╗   ██████╗ ██╗   ██╗██████╗ ██████╗ ██╗   ██╗
+██╔════╝██║  ██║██╔══██╗╚══██╔══╝   ██╔══██╗██║   ██║██╔══██╗██╔══██╗╚██╗ ██╔╝
+██║     ███████║███████║   ██║█████╗██████╔╝██║   ██║██║  ██║██║  ██║ ╚████╔╝ 
+██║     ██╔══██║██╔══██║   ██║╚════╝██╔══██╗██║   ██║██║  ██║██║  ██║  ╚██╔╝  
+╚██████╗██║  ██║██║  ██║   ██║      ██████╔╝╚██████╔╝██████╔╝██████╔╝   ██║   
+ ╚═════╝╚═╝  ╚═╝╚═╝  ╚═╝   ╚═╝      ╚═════╝  ╚═════╝ ╚═════╝ ╚═════╝    ╚═╝   
+                                                                              `;
 
 const center = (text: string, width: number) =>
   text
@@ -33,7 +32,7 @@ export const runInit = async (): Promise<void> => {
   console.clear();
   console.log(pc.green(center(banner.trim(), width)));
   console.log();
-  console.log(pc.bold(pc.green(center("🤖 BotWithHaki — Setup Wizard", width))));
+  console.log(pc.bold(pc.green(center("🤖 Chat-Buddy — Setup Wizard", width))));
   console.log(pc.dim(center("────────────────────────────────────", width)));
   console.log();
 
@@ -110,7 +109,7 @@ export const runInit = async (): Promise<void> => {
     console.log(pc.green("  ✓ Setup complete! Your bot is ready."));
     console.log();
     console.log(pc.dim("  To start the bot, run:"));
-    console.log(pc.bold(pc.cyan("    botwithaki run")));
+    console.log(pc.bold(pc.cyan("    Chat-Buddy run")));
     console.log();
     console.log(pc.dim("  You'll be prompted to scan a WhatsApp QR code."));
     console.log();
