@@ -5,10 +5,16 @@ import { handleMessages } from "./services/messageHandler.service.js";
 import { getBanner } from "./utils/banner.js";
 
 const { Client, LocalAuth } = pkg;
+
 export class WhatsAppBot {
   private client: ClientType;
+  private username: string;
+  private agentName: string;
 
-  constructor() {
+  constructor(username: string = "User", agentName: string = "Assistant") {
+    this.username = username;
+    this.agentName = agentName;
+
     this.client = new Client({
       authStrategy: new LocalAuth(),
       puppeteer: {
@@ -34,12 +40,10 @@ export class WhatsAppBot {
     this.client.on("ready", async () => {
       try {
         console.clear();
-        await getBanner();
+        await getBanner(this.agentName, this.username);
       } catch (err) {
         console.log(err);
       }
-      // console.clear();
-      // await getBanner();
     });
 
     this.client.on("auth_failure", (msg) => {
@@ -48,14 +52,13 @@ export class WhatsAppBot {
 
     this.client.on("disconnected", (reason) => {
       console.log("Disconnected:", reason);
-
       console.log("Reconnecting...");
       this.client.initialize();
     });
 
     this.client.on("message", async (message) => {
       try {
-        await handleMessages(message);
+        await handleMessages(message, this.username, this.agentName);
       } catch (err) {
         console.log("Message error:", err);
       }
@@ -68,4 +71,5 @@ export class WhatsAppBot {
     });
   }
 }
+
 export const botRebootTime = Date.now();
