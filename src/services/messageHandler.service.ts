@@ -1,23 +1,30 @@
 import { Message as MessageType } from "whatsapp-web.js";
 import { runAgent } from "../agents/agent.servce.js";
 import { botRebootTime } from "../bot.js";
-import { protocols } from "../config/agent.protocol.js";
-import { getHistory, memoryStore, storeMessage } from "./memory.service.js";
+import { createProtocols } from "../config/agent.protocol.js";
+import { storeMessage } from "./memory.service.js";
 import { handleCommand } from "./command.service.js";
-import { createEvent } from "../utils/response.js";
+import { appendMessage } from "../storage/chatHistoryStore.js";
 
-export const handleMessages = async (message: MessageType): Promise<void> => {
+export const handleMessages = async (
+  message: MessageType,
+  username: string = "Asad",
+  agentName: string = "Luffy",
+): Promise<void> => {
   // Ignore bot's own messages
   if (message.fromMe) return;
 
   // Ignore old synced messages
   if (message.timestamp * 1000 < botRebootTime) return;
 
-  //  Ignore empty
+  // Ignore empty
   if (!message.body) return;
 
   const userId = message.from;
-  const text = message.body.trim().toLowerCase();
+  const text = message.body.trim();
+  const textLower = text.toLowerCase();
+
+  const protocols = createProtocols(agentName, username);
 
   // Ignore groups if disabled
   if (
@@ -27,50 +34,31 @@ export const handleMessages = async (message: MessageType): Promise<void> => {
     return;
   }
 
-  // Store normalized message
-  storeMessage(userId, text);
+  // Get contact name for chat history
   const contact = await message.getContact();
-  const name = contact.pushname || contact.number;
-  console.log(`${name}: ${text}`);
-  const history = getHistory(userId);
-  // console.log(history);
+  const contactName = contact.pushname || contact.number;
+  console.log(`${contactName}: ${text}`);
+
+  // Store user message with timestamp
+  storeMessage(contactName, text, false);
 
   // Commands
-  if (text.startsWith("/")) {
-    await handleCommand(message, text);
+  if (textLower.startsWith("/")) {
+    await handleCommand(message, textLower);
     return;
   }
 
-  // Greeting shortcut
-  if (["hi", "hello", "hey"].includes(text)) {
-    await message.reply(
-      `Hi ${name}! I'm ${protocols.name}. Asad is currently busy, so I’ll be handling the conversation for now. How can I help you today?`,
-    );
-    return;
-  }
-
-  // agent reply
+  // ALL messages go through the agent — no hardcoded greeting shortcuts
+  // Agent handles greetings, bye, and everything else naturally
   try {
-    const reply = await runAgent(userId, text);
-    const history = memoryStore.get(userId);
-    history?.push(reply);
-    memoryStore.set(userId, history || []);
+    const reply = await runAgent(userId, contactName, text, username, agentName);
+
+    // Store agent reply with timestamp
+    storeMessage(contactName, reply, true);
+
     await message.reply(reply);
   } catch (error) {
     console.log("Tripwire triggered:", error);
     await message.reply("I cannot respond to that request.");
   }
-
-  // // creating event
-  // try {
-  //   const res = await createEvent(event);
-
-  //   console.log("Reminder created successfully!");
-  //   console.log(res);
-  // } catch (err) {
-  //   console.log(err);
-  //   await message.reply(
-  //     "Something went wrong while creating the reminder. Can you clarify the time?",
-  //   );
-  // }
 };
