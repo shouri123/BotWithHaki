@@ -19,13 +19,13 @@ const center = (text: string, width: number) =>
     })
     .join("\n");
 
-export const getBanner = async () => {
+export const getBanner = async (agentName: string = "Bot", username: string = "User") => {
   const width = process.stdout.columns ?? 80;
 
   console.clear();
   console.log(pc.green(center(banner.trim(), width)));
   console.log();
-  console.log(pc.bold(pc.green(center("🤖 WhatsApp AI Bot CLI", width))));
+  console.log(pc.bold(pc.green(center("🤖 BotWithHaki — WhatsApp AI Bot", width))));
   console.log(pc.dim(center("Automate • Reply • Schedule • Assist", width)));
   console.log(pc.dim(center("────────────────────────────────────", width)));
 
@@ -46,6 +46,8 @@ export const getBanner = async () => {
   spinner.succeed("Bot Online ✅");
 
   console.log();
+  console.log(pc.dim(center(`Agent  : ${agentName}`, width)));
+  console.log(pc.dim(center(`Owner  : ${username}`, width)));
   console.log(pc.dim(center("Status : RUNNING", width)));
   console.log();
 };
