@@ -1,5 +1,10 @@
 <div align="center">
-  <h1>🤖 BotWithHaki</h1>
+<h1>Chat Buddy</h1>
+
+[![npm version](https://img.shields.io/npm/v/chat-buddy)](https://www.npmjs.com/package/chat-buddy)
+[![npm downloads](https://img.shields.io/npm/dm/chat-buddy)](https://www.npmjs.com/package/chat-buddy)
+[![license](https://img.shields.io/github/license/Asad-bot07/BotWithHaki)](https://github.com/Asad-bot07/BotWithHaki)
+
   <p><strong>A Highly Personalized, Personality-Driven WhatsApp AI Assistant</strong></p>
 
   <p>
@@ -11,9 +16,9 @@
 
 ## 📖 Overview
 
-**BotWithHaki** is an advanced WhatsApp AI assistant packaged as a CLI tool. Originally built to act as a personal proxy when unavailable, it offers a seamless blend of context-aware intelligence, automated scheduling, and a uniquely engaging personality (inspired by lively, anime-esque energy).
+**Chat Buddy** is an advanced WhatsApp AI assistant packaged as a CLI tool. Originally built to act as a personal proxy when unavailable, it offers a seamless blend of context-aware intelligence, automated scheduling, and a uniquely engaging personality (inspired by lively, anime-esque energy).
 
-Whether you need it to mirror conversational slang, schedule calendar events, or just manage your WhatsApp chats smartly while you're busy, BotWithHaki delivers an "unfiltered" yet strictly protected and helpful bot experience.
+Whether you need it to mirror conversational slang, schedule calendar events, or just manage your WhatsApp chats smartly while you're busy, Chat Buddy delivers an "unfiltered" yet strictly protected and helpful bot experience.
 
 ### 🌟 Key Capabilities
 - **Agentic Core**: Built on the OpenAI Agents SDK for dynamic, tool-enabled responses.
@@ -33,18 +38,18 @@ The project is structured as a zero-config, securely stored NPM package with its
 You can install the package globally or run it directly using `npx`. However, for the best experience, clone this repository or install the local package:
 
 ```bash
-npm install 
+npm install chat-buddy
 # or install globally if published: npm -g install botwithaki
 ```
 
 ### 2. Configuration & Initialization
 
-BotWithHaki uses an interactive wizard to configure your environment safely. 
+Chat Buddy uses an interactive wizard to configure your environment safely. 
 Your secrets (like your `OPENAI_API_KEY`) are encrypted and stored locally.
 
 Run the init command:
 ```bash
-npm run init
+npx chat-buddy init
 # or using the CLI: npx botwithaki init
 ```
 
@@ -58,7 +63,7 @@ The wizard will ask for:
 
 Once configured, run:
 ```bash
-npm run dev
+npx chat-buddy run
 # or using the CLI: npx botwithaki run
 ```
 
@@ -73,7 +78,7 @@ npm run dev
 
 ## ⚙️ How it Works
 
-BotWithHaki employs an event-driven architecture designed for modularity and safety:
+Chat Buddy employs an event-driven architecture designed for modularity and safety:
 
 ```text
 Incoming WhatsApp Message
