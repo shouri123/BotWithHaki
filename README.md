@@ -223,14 +223,14 @@ After running this, the next `chat-buddy run` will require a fresh QR scan and (
 
 ```
 ┌──────────────────────────────────────────────────┐
-│                  WhatsApp Client                  │
-│              (whatsapp-web.js + QR)               │
+│                  WhatsApp Client                 │
+│              (whatsapp-web.js + QR)              │
 └───────────────────────┬──────────────────────────┘
                         │ incoming message
                         ▼
 ┌──────────────────────────────────────────────────┐
-│              Message Handler Service              │
-│       (routing, command parsing, flow ctrl)       │
+│              Message Handler Service             │
+│       (routing, command parsing, flow ctrl)      │
 └───────────────────────┬──────────────────────────┘
                         │
               ┌─────────┴─────────┐
@@ -244,16 +244,16 @@ After running this, the next `chat-buddy run` will require a fresh QR scan and (
                         ┌───────────┴───────────┐
                         ▼                       ▼
               ┌──────────────────┐   ┌─────────────────┐
-              │   Tool Layer     │   │  Guardrails      │
-              │ • /time          │   │ • Output filter   │
-              │ • /schedule      │   │ • Safety check    │
-              │ • /history       │   │ • Persona lock    │
-              │ • Google Calendar│   │                   │
+              │   Tool Layer     │   │  Guardrails     │
+              │ • /time          │   │ • Output filter │
+              │ • /schedule      │   │ • Safety check  │
+              │ • /history       │   │ • Persona lock  │
+              │ • Google Calendar│   │                 │
               └──────────────────┘   └─────────────────┘
                                               │
                                               ▼
                                     ┌─────────────────┐
-                                    │  WhatsApp Reply  │
+                                    │  WhatsApp Reply │
                                     └─────────────────┘
 ```
 
