@@ -10,15 +10,15 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
-        uses: actions/checkout@v3
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: "18"
+          node-version: "lts/*"
 
-      - name: Install deps
+      - name: Install dependencies
         run: npm install
 
       - name: Update dependencies
@@ -29,11 +29,11 @@ jobs:
         run: |
           git diff --quiet || echo "changed=true" >> $GITHUB_OUTPUT
 
-      - name: Commit & Push
+      - name: Commit and push updates
         if: steps.changes.outputs.changed == 'true'
         run: |
           git config --global user.name "Asad-bot07"
           git config --global user.email "asadhussain2408@gmail.com"
           git add .
-          git commit -m "chore: auto update dependencies"
+          git commit -m "chore: automated dependency update"
           git push
