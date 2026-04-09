@@ -1,9 +1,5 @@
-import path from "node:path";
-import { Auth, google } from "googleapis";
-import { title } from "node:process";
+import { google } from "googleapis";
 import { getAuth } from "../utils/googleAuth.js";
-// import { eventType } from "../types/types.js";
-// import { authenticate as AuthType } from "@google-cloud/local-auth";
 import { calendar_v3 } from "googleapis";
 import { createEvent } from "../utils/response.js";
 
@@ -14,9 +10,10 @@ export const createMeeting = async (
   description: string,
   date: string,
   attendeeEmails: string[],
-): Promise<void> => {
+): Promise<calendar_v3.Schema$Event> => {
   const auth = await getAuth();
-  const calendar = google.calendar({ version: "v3", auth: auth as any });
+  google.calendar({ version: "v3", auth: auth as any });
+
   const event: eventType = {
     summary: title,
     description,
@@ -37,13 +34,7 @@ export const createMeeting = async (
       },
     },
   };
-  const res = createEvent(event);
-  console.log("Meeting created successfully!");
-  res
-    .catch((err) => {
-      console.log(err);
-    })
-    .then((res) => {
-      console.log(res);
-    });
+
+  const createdEvent = await createEvent(event);
+  return createdEvent;
 };
